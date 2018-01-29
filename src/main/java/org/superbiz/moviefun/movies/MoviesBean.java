@@ -16,6 +16,7 @@
  */
 package org.superbiz.moviefun.movies;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import java.util.List;
+import org.slf4j.Logger;
 
 @Repository
 public class MoviesBean {
@@ -35,11 +37,14 @@ public class MoviesBean {
     public Movie find(Long id) {
         return entityManager.find(Movie.class, id);
     }
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
     public void addMovie(Movie movie) {
-        System.err.println("Creating movie with title " + movie.getTitle() +
-            ", and year " + movie.getYear());
+        //System.err.println("Creating movie with title " + movie.getTitle() +
+         //   ", and year " + movie.getYear());
+        logger.debug("Creating movie with title",  movie.getTitle(),", and year ", movie.getYear());
+
 
         entityManager.persist(movie);
     }
